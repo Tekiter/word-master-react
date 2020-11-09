@@ -1,2 +1,2 @@
-# wordmaster-react
-Practice React
+# Word Master
+React 연습용
