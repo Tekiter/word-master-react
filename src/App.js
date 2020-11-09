@@ -1,17 +1,11 @@
-import { Drawer } from "@material-ui/core";
-
-import Header from "./components/Header";
-import WordBook from "./components/WordBook";
+import Layout from "./components/Layout";
+import SideBar from "./components/SideBar";
 
 function App() {
   return (
-    <div className="App">
-      <Header></Header>
-      <Drawer variant="permanent" anchor="left">
-        <WordBook></WordBook>
-      </Drawer>
-      <main>asdfasdf</main>
-    </div>
+    <Layout appTitle="Word Master" side={<SideBar />}>
+      <div>asdf</div>
+    </Layout>
   );
 }
 
