@@ -4,17 +4,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import { Provider } from "mobx-react";
-
-import RootStore from "./stores";
-
-const root = new RootStore();
-
 ReactDOM.render(
   <React.StrictMode>
-    <Provider {...root}>
-      <App />
-    </Provider>
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
