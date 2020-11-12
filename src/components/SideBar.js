@@ -1,7 +1,7 @@
-import WordBook from "./WordBook";
+import WordbookList from "./WordbookList";
 
 function SideBar() {
-  return <WordBook />;
+  return <WordbookList />;
 }
 
 export default SideBar;

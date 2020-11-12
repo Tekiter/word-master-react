@@ -5,20 +5,24 @@ import {
   AppBar,
   Typography,
 } from "@material-ui/core";
+import WordbookToolbar from "./WordbookToolbar";
+
+const sidebarWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
+    width: `calc(100% - ${sidebarWidth}px)`,
+    marginLeft: sidebarWidth,
   },
   drawer: {
-    width: 240,
+    width: sidebarWidth,
     flexShrink: 0,
   },
   drawerPaper: {
-    width: 240,
+    width: sidebarWidth,
   },
   drawerContainer: {
     overflow: "auto",
@@ -33,10 +37,13 @@ function Layout({ appTitle, side, children }) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6">{appTitle}</Typography>
-        </Toolbar>
+      <AppBar
+        position="fixed"
+        className={classes.appBar}
+        color="transparent"
+        elevation={0}
+      >
+        <WordbookToolbar />
       </AppBar>
       <Drawer
         className={classes.drawer}
@@ -46,7 +53,9 @@ function Layout({ appTitle, side, children }) {
         variant="permanent"
         anchor="left"
       >
-        <Toolbar />
+        <Toolbar>
+          <Typography variant="h6">{appTitle}</Typography>
+        </Toolbar>
         <div className={classes.drawerContainer}>{side}</div>
       </Drawer>
       <main className={classes.content}>

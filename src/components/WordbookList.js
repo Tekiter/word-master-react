@@ -9,6 +9,7 @@ import {
   DialogContent,
   DialogActions,
   TextField,
+  ListSubheader,
 } from "@material-ui/core";
 
 import { observer } from "mobx-react";
@@ -22,16 +23,9 @@ const useStyles = makeStyles({
   addBtn: {},
 });
 
-const WordbookItem = ({ book }) => {
-  return (
-    <ListItem button>
-      <ListItemText>{book.name}</ListItemText>
-    </ListItem>
-  );
-};
-
 const CreateWordbookDialog = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [config, setConfig] = useState("");
 
   const openDialog = () => {
     setIsOpen(true);
@@ -42,7 +36,17 @@ const CreateWordbookDialog = (props) => {
   };
 
   const submit = () => {
+    (props.onSubmit || (() => {}))(config);
     closeDialog();
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setConfig((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   return (
@@ -60,6 +64,8 @@ const CreateWordbookDialog = (props) => {
             margin="dense"
             fullWidth
             label="단어장 이름"
+            name="name"
+            onChange={handleChange}
           ></TextField>
         </DialogContent>
         <DialogActions>
@@ -75,19 +81,41 @@ const CreateWordbookDialog = (props) => {
   );
 };
 
+const WordbookItem = ({ book, selected, onClick }) => {
+  function handleItemClick() {
+    onClick(book);
+  }
+
+  return (
+    <ListItem button selected={selected} onClick={handleItemClick}>
+      <ListItemText>{book.name}</ListItemText>
+    </ListItem>
+  );
+};
+
 const Wordbook = observer(() => {
   const { wordbook } = useStores();
   const classes = useStyles();
 
+  function createWordbook(config) {
+    wordbook.create(config);
+  }
+
   return (
     <>
-      <List>
+      <List subheader={<ListSubheader>내 단어장</ListSubheader>}>
         {wordbook.books.map((book) => (
-          <WordbookItem book={book} key={book.id} />
+          <WordbookItem
+            book={book}
+            key={book.id}
+            selected={book === wordbook.current}
+            onClick={() => wordbook.select(book)}
+          />
         ))}
       </List>
 
       <CreateWordbookDialog
+        onSubmit={createWordbook}
         render={(open) => (
           <Button
             className={classes.addBtn}
