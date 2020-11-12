@@ -1,7 +1,21 @@
-import { List, ListItem, ListItemText, Button } from "@material-ui/core";
+import {
+  List,
+  ListItem,
+  ListItemText,
+  Button,
+  makeStyles,
+} from "@material-ui/core";
 import { observer } from "mobx-react";
 
+import AddIcon from "@material-ui/icons/Add";
+
 import { useStores } from "../store";
+
+const useStyles = makeStyles({
+  addBtn: {
+    display: "block",
+  },
+});
 
 const WordbookItem = ({ book }) => {
   return (
@@ -13,6 +27,7 @@ const WordbookItem = ({ book }) => {
 
 const Wordbook = observer(() => {
   const { wordbook } = useStores();
+  const classes = useStyles();
 
   return (
     <>
@@ -23,12 +38,14 @@ const Wordbook = observer(() => {
       </List>
 
       <Button
+        className={classes.addBtn}
         variant="contained"
         color="primary"
+        startIcon={<AddIcon />}
         disableElevation
         onClick={() => wordbook.create({ name: "1234" })}
       >
-        +
+        새 단어장
       </Button>
     </>
   );
