@@ -1,5 +1,6 @@
-import { List, ListItem, ListItemText, Button } from "@material-ui/core";
+import { List, ListItem, ListItemText, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@material-ui/core";
 import { observer } from "mobx-react";
+import { useState } from "react";
 
 import { useStores } from "../store";
 
@@ -8,6 +9,44 @@ const WordbookItem = ({ book }) => {
     <ListItem button>
       <ListItemText>{book.name}</ListItemText>
     </ListItem>
+  );
+};
+
+const CreateWordbookDialog = (props) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openDialog = () => {
+    setIsOpen(true);
+  };
+
+  const closeDialog = () => {
+    setIsOpen(false);
+  };
+
+  return (
+    <div>
+      {props.render(openDialog)}
+      <Dialog
+        open={isOpen}
+        onClose={closeDialog}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+        <DialogContent>
+          <TextField autoFocus margin="dense" fullWidth label="단어장 이름">
+            
+          </TextField>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDialog} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={closeDialog} color="primary">
+            Subscribe
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
   );
 };
 
@@ -22,14 +61,19 @@ const Wordbook = observer(() => {
         ))}
       </List>
 
-      <Button
-        variant="contained"
-        color="primary"
-        disableElevation
-        onClick={() => wordbook.create({ name: "1234" })}
-      >
-        +
-      </Button>
+      <CreateWordbookDialog
+        render={(open) => {
+          <Button
+            variant="contained"
+            color="primary"
+            disableElevation
+            // onClick={() => wordbook.create({ name: "1234" })}
+            onClick={open}
+          >
+            +
+          </Button>;
+        }}
+      ></CreateWordbookDialog>
     </>
   );
 });
