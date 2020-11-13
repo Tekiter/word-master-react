@@ -107,5 +107,12 @@ export async function deleteWordbook(id) {
   books.splice(idx, 1);
 
   saveList();
-  removeBook();
+  removeBook(id);
+}
+
+export async function updateWordbookInfo(id, newData) {
+  const book = await getWordbook(id);
+  const newBook = { ...book, ...newData };
+
+  saveBook(newBook);
 }

@@ -1,16 +1,22 @@
-import { Box, Tab, Tabs } from "@material-ui/core";
+import { useState } from "react";
 import { observer, Provider } from "mobx-react";
+import { Tab, Tabs } from "@material-ui/core";
 import { useStores } from "../store";
-import WordbookToolbar from "./WordbookToolbar";
+
 import WordbookStore from "../store/wordbook";
-import { useEffect, useState } from "react";
+import WordbookToolbar from "./WordbookToolbar";
+import WordListPage from "./WordListPage";
+import SettingPage from "./SettingPage";
+import { autorun } from "mobx";
 
 const pages = [
   {
     title: "단어",
+    component: WordListPage,
   },
   {
     title: "설정",
+    component: SettingPage,
   },
 ];
 
@@ -25,7 +31,7 @@ export default observer(function WordbookContent() {
     setSelectedIndex(val);
   }
 
-  useEffect(() => {
+  autorun(() => {
     if (wordbookList.selected) {
       const current = wordbookList.current;
       wordbookStore.load(current.id);
@@ -35,6 +41,8 @@ export default observer(function WordbookContent() {
   if (!wordbookList.selected) {
     return <div>단어장을 만들어보세요!</div>;
   }
+
+  const PageContent = pages[selectedIndex].component;
 
   return (
     <Provider wordbook={wordbookStore}>
@@ -48,9 +56,7 @@ export default observer(function WordbookContent() {
           </Tabs>
         }
       />
-      <Box px={2}>{JSON.stringify(wordbookStore)}</Box>
-      <Box px={2}>{JSON.stringify(wordbookList.current)}</Box>
-      <Box px={2}>{pages[selectedIndex].title} 페이지</Box>
+      <PageContent />
     </Provider>
   );
 });
