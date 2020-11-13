@@ -2,9 +2,9 @@ import { makeAutoObservable, runInAction } from "mobx";
 
 import * as api from "../utils/api";
 
-export default class WordbookStore {
+export default class WordbookListStore {
   books = [];
-  current = null;
+  current = { id: -1 };
 
   constructor() {
     // makeObservable(this, {
@@ -26,7 +26,7 @@ export default class WordbookStore {
   }
 
   get selected() {
-    return this.current !== null;
+    return this.current.id !== -1;
   }
 
   async load() {

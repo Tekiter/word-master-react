@@ -1,21 +1,41 @@
-import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core";
-import SettingsIcon from "@material-ui/icons/Settings";
+import {
+  AppBar,
+  Box,
+  makeStyles,
+  Toolbar,
+  Typography,
+} from "@material-ui/core";
+import { useStores } from "../store";
+import { observer } from "mobx-react";
 
-export default function WordbookToolbar({ wordbookList }) {
+const useStyles = makeStyles((theme) => ({
+  nameBox: {
+    width: "15em",
+    display: "flex",
+    alignItems: "center",
+    marginLeft: theme.spacing(3),
+  },
+}));
+
+export default observer(function WordbookToolbar({ navTabs }) {
+  const classes = useStyles();
+  const { wordbookList, wordbook } = useStores();
+
   if (!wordbookList.selected) {
     return <Toolbar />;
   }
 
   return (
-    <AppBar position="sticky" color="transparent" elevation={0}>
-      <Toolbar>
-        <Typography variant="h6" noWrap>
-          {wordbookList.current.name}
-        </Typography>
-        <IconButton edge="start" size="small">
-          <SettingsIcon />
-        </IconButton>
-      </Toolbar>
+    <AppBar position="sticky" color="transparent" elevation={1}>
+      <Box display="flex" flexDirection="row">
+        <Box className={classes.nameBox}>
+          <Typography variant="h6" noWrap>
+            {wordbook.name}
+          </Typography>
+        </Box>
+
+        {navTabs}
+      </Box>
     </AppBar>
   );
-}
+});

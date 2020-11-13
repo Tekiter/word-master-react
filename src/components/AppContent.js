@@ -9,7 +9,7 @@ export default observer(function AppContent() {
     if (wordbookList.selected) {
       return <div>선택된 단어장이 없습니다...</div>;
     } else {
-      return <WordbookContent />;
+      return <WordbookContent bookInfo={wordbookList.selected} />;
     }
   }
 
