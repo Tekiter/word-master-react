@@ -1,5 +1,6 @@
 import { observer } from "mobx-react";
 import { useStores } from "../store";
+import WordbookToolbar from "./WordbookToolbar";
 
 export default observer(function WordbookContent() {
   const { wordbookList } = useStores();
@@ -8,5 +9,10 @@ export default observer(function WordbookContent() {
     return <div>단어장을 만들어보세요!</div>;
   }
 
-  return <div>{JSON.stringify(wordbookList.current)}</div>;
+  return (
+    <>
+      <WordbookToolbar wordbookList={wordbookList} />
+      <div>{JSON.stringify(wordbookList.current)}</div>
+    </>
+  );
 });

@@ -57,7 +57,7 @@ const CreateWordbookDialog = (props) => {
         onClose={closeDialog}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">단어장 추가</DialogTitle>
+        <DialogTitle id="form-dialog-title">단어장 만들기</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -126,7 +126,7 @@ const Wordbook = observer(() => {
             fullWidth
             onClick={() => open()}
           >
-            새 단어장
+            단어장 만들기
           </Button>
         )}
       ></CreateWordbookDialog>

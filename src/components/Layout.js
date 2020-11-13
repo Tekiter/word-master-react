@@ -37,14 +37,6 @@ function Layout({ appTitle, side, children }) {
 
   return (
     <div className={classes.root}>
-      <AppBar
-        position="fixed"
-        className={classes.appBar}
-        color="transparent"
-        elevation={0}
-      >
-        <WordbookToolbar />
-      </AppBar>
       <Drawer
         className={classes.drawer}
         classes={{
@@ -59,7 +51,8 @@ function Layout({ appTitle, side, children }) {
         <div className={classes.drawerContainer}>{side}</div>
       </Drawer>
       <main className={classes.content}>
-        <Toolbar />
+        {/* <Toolbar /> */}
+
         {children}
       </main>
     </div>

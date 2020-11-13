@@ -4,7 +4,6 @@ import * as api from "../utils/api";
 
 export default class WordbookStore {
   books = [];
-  nextId = 0;
   current = null;
 
   constructor() {
@@ -31,21 +30,9 @@ export default class WordbookStore {
   }
 
   async load() {
-    // const obj = localStorage.getItem("wordbookList");
-    // if (obj) {
-    //   this.books = JSON.parse(obj);
-
-    //   let maxId = -1;
-    //   this.books.forEach((book) => {
-    //     maxId = Math.max(maxId, book.id);
-    //   });
-    //   this.nextId = maxId + 1;
-    // }
-
     const res = await api.getWordbookList();
     runInAction(() => {
       this.books = res.books;
-      this.nextId = res.nextId;
     });
   }
 
