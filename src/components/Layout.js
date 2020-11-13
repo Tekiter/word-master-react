@@ -1,11 +1,4 @@
-import {
-  Drawer,
-  makeStyles,
-  Toolbar,
-  AppBar,
-  Typography,
-} from "@material-ui/core";
-import WordbookToolbar from "./WordbookToolbar";
+import { Drawer, makeStyles, Toolbar, Typography } from "@material-ui/core";
 
 const sidebarWidth = 240;
 
