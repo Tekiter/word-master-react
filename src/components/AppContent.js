@@ -3,10 +3,10 @@ import { useStores } from "../store";
 import WordbookContent from "./WordbookContent";
 
 export default observer(function AppContent() {
-  const { wordbook } = useStores();
+  const { wordbookList } = useStores();
 
   function ContentSelector() {
-    if (wordbook.selected) {
+    if (wordbookList.selected) {
       return <div>선택된 단어장이 없습니다...</div>;
     } else {
       return <WordbookContent />;

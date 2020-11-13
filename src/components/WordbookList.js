@@ -94,22 +94,22 @@ const WordbookItem = ({ book, selected, onClick }) => {
 };
 
 const Wordbook = observer(() => {
-  const { wordbook } = useStores();
+  const { wordbookList } = useStores();
   const classes = useStyles();
 
   function createWordbook(config) {
-    wordbook.create(config);
+    wordbookList.create(config);
   }
 
   return (
     <>
       <List subheader={<ListSubheader>내 단어장</ListSubheader>}>
-        {wordbook.books.map((book) => (
+        {wordbookList.books.map((book) => (
           <WordbookItem
             book={book}
             key={book.id}
-            selected={book === wordbook.current}
-            onClick={() => wordbook.select(book)}
+            selected={book === wordbookList.current}
+            onClick={() => wordbookList.select(book)}
           />
         ))}
       </List>
