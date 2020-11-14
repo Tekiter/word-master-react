@@ -14,14 +14,27 @@ export default class WordbookStore {
   async load(id) {
     const book = await api.getWordbook(id);
     runInAction(() => {
-      this.wordList = book.words;
+      this.wordList = book.wordList;
       this.name = book.name;
       this.id = id;
+    });
+  }
+
+  async update() {
+    const book = await api.getWordbook(this.id);
+    runInAction(() => {
+      this.wordList = book.wordList;
+      this.name = book.name;
     });
   }
 
   async changeName(name) {
     this.name = name;
     await api.updateWordbookInfo(this.id, { name });
+  }
+
+  async addWord({ word, def }) {
+    await api.addWord(this.id, { word, def });
+    await this.update();
   }
 }
