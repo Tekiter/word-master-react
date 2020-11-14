@@ -95,7 +95,6 @@ export async function createWordbook(bookInfo) {
 
 export async function getWordbook(id) {
   await fakeDelay();
-  console.log(id);
   const book = loadBook(id);
 
   return book;
