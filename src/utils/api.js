@@ -95,7 +95,6 @@ export async function createWordbook(bookInfo) {
 
 export async function getWordbook(id) {
   await fakeDelay();
-
   const book = loadBook(id);
 
   return book;
@@ -115,4 +114,18 @@ export async function updateWordbookInfo(id, newData) {
   const newBook = { ...book, ...newData };
 
   saveBook(newBook);
+}
+
+export async function addWord(wordbookId, word) {
+  if (word.word === "" || word.def === "") {
+    return;
+  }
+  const book = await getWordbook(wordbookId);
+  if (book.wordList.find((item) => item.word === word.word)) {
+    // throw Error("word already exists");
+    return;
+  }
+  book.wordList.push({ word: word.word, def: word.def });
+
+  saveBook(book);
 }
