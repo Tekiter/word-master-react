@@ -6,6 +6,7 @@ export default class WordbookStore {
   wordList = [];
   name = "";
   id = -1;
+  isHideDef = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -36,5 +37,9 @@ export default class WordbookStore {
   async addWord({ word, def }) {
     await api.addWord(this.id, { word, def });
     await this.update();
+  }
+
+  setHideDef(value) {
+    this.isHideDef = value;
   }
 }

@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function WordItem({ word }) {
+function WordItem({ word, hideDef }) {
   return (
     <>
       <ListItem>
@@ -31,9 +31,11 @@ function WordItem({ word }) {
               {word.word}
             </Typography>
             <Box flexGrow={1} />
-            <Typography component="div" variant="h6">
-              {word.def}
-            </Typography>
+            {!hideDef && (
+              <Typography component="div" variant="h6">
+                {word.def}
+              </Typography>
+            )}
           </Box>
         </ListItemText>
       </ListItem>
@@ -42,13 +44,13 @@ function WordItem({ word }) {
   );
 }
 
-function WordList({ words }) {
+function WordList({ words, hideDef }) {
   return (
     <Box>
       <Paper>
         <List dense>
           {words.map((word) => (
-            <WordItem word={word} key={word.word} />
+            <WordItem word={word} key={word.word} hideDef={hideDef} />
           ))}
         </List>
       </Paper>
@@ -65,7 +67,7 @@ export default observer(function WordListPage() {
     <Container className={classes.container} maxWidth="md">
       <Grid container spacing={2}>
         <Grid item xs={8}>
-          <WordList words={wordbook.wordList} />
+          <WordList words={wordbook.wordList} hideDef={wordbook.isHideDef} />
         </Grid>
         <Grid item xs={4}>
           <WordListControl />

@@ -1,15 +1,54 @@
-import { Box, Button, Paper, TextField } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  makeStyles,
+  Paper,
+  Switch,
+  TextField,
+} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { observer } from "mobx-react";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useStores } from "../store";
+
+const useStyles = makeStyles((theme) => ({
+  addWordBtn: {
+    marginTop: theme.spacing(1),
+  },
+}));
+
+function Panel({ children }) {
+  return (
+    <Box marginBottom={2}>
+      <Paper>
+        <Box padding={1.5}>{children}</Box>
+      </Paper>
+    </Box>
+  );
+}
 
 function AddWordPanel({ onSubmit }) {
   const [word, setWord] = useState("");
   const [def, setDef] = useState("");
 
+  const classes = useStyles();
+
   const wordRef = useRef(null);
   const defRef = useRef(null);
+
+  const submitable = useMemo(() => {
+    if (word.length === 0) {
+      return false;
+    }
+    if (def.length === 0) {
+      return false;
+    }
+    return true;
+  }, [word, def]);
 
   const handleChange = (e) => {
     if (e.target.name === "word") {
@@ -41,7 +80,7 @@ function AddWordPanel({ onSubmit }) {
   };
 
   return (
-    <Box padding={1}>
+    <Panel>
       <TextField
         inputRef={wordRef}
         label="단어"
@@ -65,16 +104,37 @@ function AddWordPanel({ onSubmit }) {
         onKeyDown={handleKeyDef}
       />
       <Button
+        className={classes.addWordBtn}
         variant="contained"
         color="primary"
         startIcon={<AddIcon />}
         disableElevation
         fullWidth
+        disabled={!submitable}
         onClick={() => handleSubmit()}
       >
         단어 추가
       </Button>
-    </Box>
+    </Panel>
+  );
+}
+
+function ViewTypePanel({ isHideDef, onHideDefChange }) {
+  function handleChange(e) {
+    console.log(e.target.checked);
+    onHideDefChange(e.target.checked);
+  }
+  return (
+    <Panel>
+      <List>
+        <ListItem>
+          <ListItemText primary="단어 뜻 숨기기" />
+          <ListItemSecondaryAction>
+            <Switch edge="end" value={isHideDef} onChange={handleChange} />
+          </ListItemSecondaryAction>
+        </ListItem>
+      </List>
+    </Panel>
   );
 }
 
@@ -86,9 +146,13 @@ const WordListControl = observer(function WordListControl() {
   }
 
   return (
-    <Paper>
+    <>
+      <ViewTypePanel
+        isHideDef={wordbook.isHideDef}
+        onHideDefChange={(val) => wordbook.setHideDef(val)}
+      />
       <AddWordPanel onSubmit={addWord} />
-    </Paper>
+    </>
   );
 });
 
