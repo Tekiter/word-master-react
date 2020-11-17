@@ -26,7 +26,7 @@ export default observer(function WordbookToolbar({ navTabs }) {
   }
 
   return (
-    <AppBar position="sticky" color="transparent" elevation={1}>
+    <AppBar position="sticky" color="inherit" elevation={1}>
       <Box display="flex" flexDirection="row">
         <Box className={classes.nameBox}>
           <Typography variant="h6" noWrap>
