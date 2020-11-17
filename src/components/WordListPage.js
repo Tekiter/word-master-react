@@ -12,8 +12,10 @@ import {
 } from "@material-ui/core";
 import { observer } from "mobx-react";
 import { useStores } from "../store";
+import FlipMove from "react-flip-move";
 
 import WordListControl from "./WordListControl";
+import { forwardRef } from "react";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -21,9 +23,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function WordItem({ word, hideDef }) {
+const WordItem = forwardRef(function WordItem({ word, hideDef }, ref) {
   return (
-    <>
+    <div ref={ref}>
       <ListItem>
         <ListItemText>
           <Box display="flex">
@@ -40,18 +42,27 @@ function WordItem({ word, hideDef }) {
         </ListItemText>
       </ListItem>
       <Divider component="li" />
-    </>
+    </div>
   );
-}
+});
 
-function WordList({ words, hideDef }) {
+function WordList({ words, hideDef, wordbookName }) {
   return (
     <Box>
       <Paper>
         <List dense>
-          {words.map((word) => (
-            <WordItem word={word} key={word.word} hideDef={hideDef} />
-          ))}
+          <FlipMove
+            enterAnimation="accordionVertical"
+            leaveAnimation="accordionVertical"
+          >
+            {words.map((word) => (
+              <WordItem
+                word={word}
+                key={wordbookName + word.word}
+                hideDef={hideDef}
+              />
+            ))}
+          </FlipMove>
         </List>
       </Paper>
     </Box>
@@ -67,7 +78,11 @@ export default observer(function WordListPage() {
     <Container className={classes.container} maxWidth="md">
       <Grid container spacing={2}>
         <Grid item xs={8}>
-          <WordList words={wordbook.wordList} hideDef={wordbook.isHideDef} />
+          <WordList
+            words={wordbook.wordList}
+            wordbookName={wordbook.name}
+            hideDef={wordbook.isHideDef}
+          />
         </Grid>
         <Grid item xs={4}>
           <WordListControl />

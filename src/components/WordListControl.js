@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  InputAdornment,
   List,
   ListItem,
   ListItemSecondaryAction,
@@ -11,6 +12,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import SearchIcon from "@material-ui/icons/Search";
 import { observer } from "mobx-react";
 import { useMemo, useRef, useState } from "react";
 import { useStores } from "../store";
@@ -24,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 function Panel({ children }) {
   return (
     <Box marginBottom={2}>
-      <Paper>
+      <Paper variant="outlined">
         <Box padding={1.5}>{children}</Box>
       </Paper>
     </Box>
@@ -121,7 +123,6 @@ function AddWordPanel({ onSubmit }) {
 
 function ViewTypePanel({ isHideDef, onHideDefChange }) {
   function handleChange(e) {
-    console.log(e.target.checked);
     onHideDefChange(e.target.checked);
   }
   return (
@@ -138,6 +139,34 @@ function ViewTypePanel({ isHideDef, onHideDefChange }) {
   );
 }
 
+function SearchPanel({ onSearchCnahge, search }) {
+  function handleChange(e) {
+    if (onSearchCnahge) {
+      onSearchCnahge(e.target.value);
+    }
+  }
+
+  return (
+    <Panel>
+      <TextField
+        placeholder="검색"
+        variant="outlined"
+        margin="dense"
+        fullWidth
+        value={search}
+        onChange={handleChange}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
+      />
+    </Panel>
+  );
+}
+
 const WordListControl = observer(function WordListControl() {
   const { wordbook } = useStores();
 
@@ -145,8 +174,13 @@ const WordListControl = observer(function WordListControl() {
     wordbook.addWord({ word: word.word, def: word.def });
   }
 
+  function changeSearch(search) {
+    wordbook.setSearch(search);
+  }
+
   return (
     <>
+      <SearchPanel onSearchCnahge={changeSearch} search={wordbook.search} />
       <ViewTypePanel
         isHideDef={wordbook.isHideDef}
         onHideDefChange={(val) => wordbook.setHideDef(val)}
