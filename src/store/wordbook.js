@@ -59,4 +59,9 @@ export default class WordbookStore {
   setHideDef(value) {
     this.isHideDef = value;
   }
+
+  async sort(sortType) {
+    await api.sortWords(this.id, sortType);
+    await this.update();
+  }
 }

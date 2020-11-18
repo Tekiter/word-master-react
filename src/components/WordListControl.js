@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  ButtonGroup,
   InputAdornment,
   List,
   ListItem,
@@ -139,10 +140,16 @@ function ViewTypePanel({ isHideDef, onHideDefChange }) {
   );
 }
 
-function SearchPanel({ onSearchCnahge, search }) {
+function ViewOptionPanel({ onSearchCnahge, search, onSortAction }) {
   function handleChange(e) {
     if (onSearchCnahge) {
       onSearchCnahge(e.target.value);
+    }
+  }
+
+  function handleSortAction(type) {
+    if (onSortAction) {
+      onSortAction(type);
     }
   }
 
@@ -163,6 +170,10 @@ function SearchPanel({ onSearchCnahge, search }) {
           ),
         }}
       />
+      <ButtonGroup color="primary" fullWidth>
+        <Button onClick={() => handleSortAction("dict")}>사전순 정렬</Button>
+        <Button onClick={() => handleSortAction("rand")}>랜덤 섞기</Button>
+      </ButtonGroup>
     </Panel>
   );
 }
@@ -178,9 +189,17 @@ const WordListControl = observer(function WordListControl() {
     wordbook.setSearch(search);
   }
 
+  function sortAction(type) {
+    wordbook.sort(type);
+  }
+
   return (
     <>
-      <SearchPanel onSearchCnahge={changeSearch} search={wordbook.search} />
+      <ViewOptionPanel
+        onSearchCnahge={changeSearch}
+        search={wordbook.search}
+        onSortAction={sortAction}
+      />
       <ViewTypePanel
         isHideDef={wordbook.isHideDef}
         onHideDefChange={(val) => wordbook.setHideDef(val)}

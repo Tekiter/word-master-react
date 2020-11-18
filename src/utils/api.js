@@ -129,3 +129,24 @@ export async function addWord(wordbookId, word) {
 
   saveBook(book);
 }
+
+export async function sortWords(wordbookId, sortType) {
+  const book = await getWordbook(wordbookId);
+  if (sortType === "dict") {
+    book.wordList.sort((a, b) => {
+      return a.word.localeCompare(b.word);
+    });
+  } else if (sortType === "rand") {
+    console.log("rand!");
+    for (let i = book.wordList.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [book.wordList[i], book.wordList[j]] = [
+        book.wordList[j],
+        book.wordList[i],
+      ];
+    }
+  } else {
+    return;
+  }
+  saveBook(book);
+}

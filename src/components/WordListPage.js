@@ -7,7 +7,6 @@ import {
   ListItem,
   ListItemText,
   makeStyles,
-  Paper,
   Typography,
 } from "@material-ui/core";
 import { observer } from "mobx-react";
@@ -49,22 +48,23 @@ const WordItem = forwardRef(function WordItem({ word, hideDef }, ref) {
 function WordList({ words, hideDef, wordbookName }) {
   return (
     <Box>
-      <Paper>
-        <List dense>
-          <FlipMove
-            enterAnimation="accordionVertical"
-            leaveAnimation="accordionVertical"
-          >
-            {words.map((word) => (
-              <WordItem
-                word={word}
-                key={wordbookName + word.word}
-                hideDef={hideDef}
-              />
-            ))}
-          </FlipMove>
-        </List>
-      </Paper>
+      {/* <Paper variant="outlined"> */}
+      <List dense>
+        <Divider />
+        <FlipMove
+          enterAnimation="accordionVertical"
+          leaveAnimation="accordionVertical"
+        >
+          {words.map((word) => (
+            <WordItem
+              word={word}
+              key={wordbookName + word.word}
+              hideDef={hideDef}
+            />
+          ))}
+        </FlipMove>
+      </List>
+      {/* </Paper> */}
     </Box>
   );
 }
