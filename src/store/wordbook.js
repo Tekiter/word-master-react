@@ -22,6 +22,10 @@ export default class WordbookStore {
     });
   }
 
+  get count() {
+    return this.rawWordList.length;
+  }
+
   async load(id) {
     const book = await api.getWordbook(id);
     runInAction(() => {

@@ -43,12 +43,18 @@ export default class WordbookListStore {
     await this.load();
   }
 
+  async delete({ id }) {
+    await api.deleteWordbook(id);
+    await this.load();
+    this.current = { id: -1 };
+  }
+
   select = ({ id }) => {
     const ref = this.books.find((book) => book.id === id);
     if (ref) {
       this.current = ref;
     } else {
-      this.current = null;
+      this.current = { id: -1 };
     }
   };
 }

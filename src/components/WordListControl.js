@@ -11,6 +11,7 @@ import {
   Paper,
   Switch,
   TextField,
+  Typography,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import SearchIcon from "@material-ui/icons/Search";
@@ -122,12 +123,13 @@ function AddWordPanel({ onSubmit }) {
   );
 }
 
-function ViewTypePanel({ isHideDef, onHideDefChange }) {
+function ViewTypePanel({ isHideDef, onHideDefChange, wordCount }) {
   function handleChange(e) {
     onHideDefChange(e.target.checked);
   }
   return (
     <Panel>
+      <Typography>총 {wordCount}개 단어</Typography>
       <List>
         <ListItem>
           <ListItemText primary="단어 뜻 숨기기" />
@@ -203,6 +205,7 @@ const WordListControl = observer(function WordListControl() {
       <ViewTypePanel
         isHideDef={wordbook.isHideDef}
         onHideDefChange={(val) => wordbook.setHideDef(val)}
+        wordCount={wordbook.count}
       />
       <AddWordPanel onSubmit={addWord} />
     </>

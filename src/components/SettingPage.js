@@ -4,6 +4,11 @@ import {
   Card,
   CardContent,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
   makeStyles,
   TextField,
   Typography,
@@ -19,7 +24,21 @@ const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: theme.spacing(2),
   },
+  divider: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
 }));
+
+function Seperate() {
+  const classes = useStyles();
+
+  return (
+    <>
+      <Divider className={classes.divider} />
+    </>
+  );
+}
 
 function ChangeName({ currentName, onNameChange, ...others }) {
   const classes = useStyles();
@@ -45,33 +64,78 @@ function ChangeName({ currentName, onNameChange, ...others }) {
   };
 
   return (
-    <Card {...others}>
-      <CardContent>
-        <Typography className={classes.title}>단어장 이름</Typography>
-        <Box display="flex" flexDirection="row">
-          <TextField
+    <>
+      <Typography className={classes.title}>단어장 이름</Typography>
+      <Box display="flex" flexDirection="row">
+        <TextField
+          variant="outlined"
+          value={newName}
+          onChange={(e) => setNewName(e.target.value)}
+          onKeyDown={handleKey}
+          fullWidth
+          autoComplete="off"
+        />
+        <Box ml={1} display="flex">
+          <Button
             variant="outlined"
-            value={newName}
-            onChange={(e) => setNewName(e.target.value)}
-            onKeyDown={handleKey}
-            fullWidth
-            autoComplete="off"
-          />
-          <Box ml={1} display="flex">
-            <Button
-              variant="outlined"
-              color="primary"
-              size="small"
-              placeholder={currentName}
-              onClick={handleChange}
-              disabled={currentName === newName}
-            >
-              변경
-            </Button>
-          </Box>
+            color="primary"
+            size="small"
+            placeholder={currentName}
+            onClick={handleChange}
+            disabled={currentName === newName}
+          >
+            변경
+          </Button>
         </Box>
-      </CardContent>
-    </Card>
+      </Box>
+    </>
+  );
+}
+
+function DeleteWordbook({ onDelete, name }) {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const classes = useStyles();
+
+  function handleClick() {
+    setDialogOpen(true);
+  }
+
+  function handleDialog(isYes) {
+    if (onDelete && isYes) {
+      onDelete.call();
+    }
+    setDialogOpen(false);
+  }
+
+  return (
+    <Box mt={1} display="flex">
+      <Typography className={classes.title}>단어장 삭제</Typography>
+      <Box flexGrow={1} />
+      <Button
+        variant="contained"
+        color="secondary"
+        size="small"
+        onClick={handleClick}
+      >
+        단어장 삭제하기
+      </Button>
+      <Dialog open={dialogOpen}>
+        <DialogTitle>단어장 삭제</DialogTitle>
+        <DialogContent>{name} 단어장을 정말 삭제하시겠습니까?</DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => handleDialog(true)}
+            color="secondary"
+            autoFocus
+          >
+            삭제
+          </Button>
+          <Button onClick={() => handleDialog(false)} color="primary">
+            취소
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 }
 
@@ -85,9 +149,19 @@ export default observer(function SettingPage() {
     await wordbookList.load();
   }
 
+  async function deleteWordbook() {
+    await wordbookList.delete(wordbook.id);
+  }
+
   return (
     <Container className={classes.container} maxWidth="sm">
-      <ChangeName currentName={wordbook.name} onNameChange={changeName} />
+      <Card variant="outlined">
+        <CardContent>
+          <ChangeName currentName={wordbook.name} onNameChange={changeName} />
+          <Seperate />
+          <DeleteWordbook onDelete={deleteWordbook} name={wordbook.name} />
+        </CardContent>
+      </Card>
     </Container>
   );
 });
