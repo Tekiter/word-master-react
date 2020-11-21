@@ -7,6 +7,7 @@ export default class WordbookStore {
   name = "";
   id = -1;
   isHideDef = false;
+  showDelWord = false;
   search = "";
 
   constructor() {
@@ -22,6 +23,10 @@ export default class WordbookStore {
     });
   }
 
+  get count() {
+    return this.rawWordList.length;
+  }
+
   async load(id) {
     const book = await api.getWordbook(id);
     runInAction(() => {
@@ -30,6 +35,7 @@ export default class WordbookStore {
       this.id = id;
 
       this.isHideDef = false;
+      this.showDelWord = false;
       this.search = "";
     });
   }
@@ -52,12 +58,21 @@ export default class WordbookStore {
     await this.update();
   }
 
+  async deleteWord(word) {
+    await api.deleteWord(this.id, word);
+    await this.update();
+  }
+
   setSearch(search) {
     this.search = search;
   }
 
   setHideDef(value) {
     this.isHideDef = value;
+  }
+
+  setDelWord(value) {
+    this.showDelWord = value;
   }
 
   async sort(sortType) {

@@ -7,7 +7,7 @@ import WordbookStore from "../store/wordbook";
 import WordbookToolbar from "./WordbookToolbar";
 import WordListPage from "./WordListPage";
 import SettingPage from "./SettingPage";
-import { autorun } from "mobx";
+import { reaction } from "mobx";
 
 const pages = [
   {
@@ -31,12 +31,14 @@ export default observer(function WordbookContent() {
     setSelectedIndex(val);
   }
 
-  autorun(() => {
-    if (wordbookList.selected) {
-      const current = wordbookList.current;
-      wordbookStore.load(current.id);
+  reaction(
+    () => wordbookList.current,
+    async (current, prev) => {
+      if (current.id !== -1) {
+        await wordbookStore.load(current.id);
+      }
     }
-  });
+  );
 
   if (!wordbookList.selected) {
     return <div>단어장을 만들어보세요!</div>;

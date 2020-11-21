@@ -11,6 +11,7 @@ import {
   Paper,
   Switch,
   TextField,
+  Typography,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import SearchIcon from "@material-ui/icons/Search";
@@ -122,17 +123,42 @@ function AddWordPanel({ onSubmit }) {
   );
 }
 
-function ViewTypePanel({ isHideDef, onHideDefChange }) {
-  function handleChange(e) {
-    onHideDefChange(e.target.checked);
-  }
+function ViewTypePanel({
+  isHideDef,
+  showDelWord,
+  onHideDefChange,
+  onShowDelWordChange,
+  wordCount,
+}) {
+  const handleChange = (type) => (e) => {
+    if (type === "hideDef") {
+      onHideDefChange(e.target.checked);
+    } else if (type === "delWord") {
+      onShowDelWordChange(e.target.checked);
+    }
+  };
   return (
     <Panel>
+      <Typography>총 {wordCount}개 단어</Typography>
       <List>
         <ListItem>
           <ListItemText primary="단어 뜻 숨기기" />
           <ListItemSecondaryAction>
-            <Switch edge="end" value={isHideDef} onChange={handleChange} />
+            <Switch
+              edge="end"
+              checked={isHideDef}
+              onChange={handleChange("hideDef")}
+            />
+          </ListItemSecondaryAction>
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="단어 삭제 켜기" />
+          <ListItemSecondaryAction>
+            <Switch
+              edge="end"
+              checked={showDelWord}
+              onChange={handleChange("delWord")}
+            />
           </ListItemSecondaryAction>
         </ListItem>
       </List>
@@ -202,7 +228,10 @@ const WordListControl = observer(function WordListControl() {
       />
       <ViewTypePanel
         isHideDef={wordbook.isHideDef}
+        showDelWord={wordbook.showDelWord}
         onHideDefChange={(val) => wordbook.setHideDef(val)}
+        onShowDelWordChange={(val) => wordbook.setDelWord(val)}
+        wordCount={wordbook.count}
       />
       <AddWordPanel onSubmit={addWord} />
     </>
