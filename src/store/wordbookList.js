@@ -49,12 +49,12 @@ export default class WordbookListStore {
     this.current = { id: -1 };
   }
 
-  select = ({ id }) => {
+  select({ id }) {
     const ref = this.books.find((book) => book.id === id);
     if (ref) {
       this.current = ref;
     } else {
       this.current = { id: -1 };
     }
-  };
+  }
 }
