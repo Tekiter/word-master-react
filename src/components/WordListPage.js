@@ -3,6 +3,7 @@ import {
   Container,
   Divider,
   Grid,
+  IconButton,
   List,
   ListItem,
   ListItemText,
@@ -12,6 +13,7 @@ import {
 import { observer } from "mobx-react";
 import { useStores } from "../store";
 import FlipMove from "react-flip-move";
+import CloseIcon from "@material-ui/icons/Close";
 
 import WordListControl from "./WordListControl";
 import { forwardRef } from "react";
@@ -22,12 +24,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const WordItem = forwardRef(function WordItem({ word, hideDef }, ref) {
+const WordItem = forwardRef(function WordItem(
+  { word, hideDef, showDelWord, onDelete },
+  ref
+) {
+  function handleDeleteClick() {
+    if (onDelete) {
+      onDelete(word);
+    }
+  }
+
   return (
-    <div ref={ref}>
+    <Box ref={ref}>
       <ListItem>
         <ListItemText>
           <Box display="flex">
+            {showDelWord ? (
+              <Box pr={1}>
+                <IconButton
+                  size="small"
+                  color="secondary"
+                  onClick={handleDeleteClick}
+                >
+                  <CloseIcon />
+                </IconButton>
+              </Box>
+            ) : null}
+
             <Typography component="div" variant="h6">
               {word.word}
             </Typography>
@@ -41,14 +64,19 @@ const WordItem = forwardRef(function WordItem({ word, hideDef }, ref) {
         </ListItemText>
       </ListItem>
       <Divider component="li" />
-    </div>
+    </Box>
   );
 });
 
-function WordList({ words, hideDef, wordbookName }) {
+function WordList({ words, hideDef, showDelWord, wordbookName, onDeleteWord }) {
+  function handleDelete({ word }) {
+    if (onDeleteWord) {
+      onDeleteWord(word);
+    }
+  }
+
   return (
     <Box>
-      {/* <Paper variant="outlined"> */}
       <List dense>
         <Divider />
         <FlipMove
@@ -60,11 +88,12 @@ function WordList({ words, hideDef, wordbookName }) {
               word={word}
               key={wordbookName + word.word}
               hideDef={hideDef}
+              onDelete={handleDelete}
+              showDelWord={showDelWord}
             />
           ))}
         </FlipMove>
       </List>
-      {/* </Paper> */}
     </Box>
   );
 }
@@ -74,6 +103,10 @@ export default observer(function WordListPage() {
 
   const classes = useStyles();
 
+  function deleteWord(word) {
+    wordbook.deleteWord(word);
+  }
+
   return (
     <Container className={classes.container} maxWidth="md">
       <Grid container spacing={2}>
@@ -82,6 +115,8 @@ export default observer(function WordListPage() {
             words={wordbook.wordList}
             wordbookName={wordbook.name}
             hideDef={wordbook.isHideDef}
+            onDeleteWord={deleteWord}
+            showDelWord={wordbook.showDelWord}
           />
         </Grid>
         <Grid item xs={4}>

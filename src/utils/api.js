@@ -130,6 +130,13 @@ export async function addWord(wordbookId, word) {
   saveBook(book);
 }
 
+export async function deleteWord(wordbookId, word) {
+  const book = await getWordbook(wordbookId);
+  const idx = book.wordList.findIndex((item) => item.word === word);
+  book.wordList.splice(idx, 1);
+  saveBook(book);
+}
+
 export async function sortWords(wordbookId, sortType) {
   const book = await getWordbook(wordbookId);
   if (sortType === "dict") {
