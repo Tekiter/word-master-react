@@ -1,4 +1,4 @@
-# Word Master ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Tekiter/word-master-react/Deploy%20CI?label=actions&logo=github) <a href="LICENSE.md"><img src="https://img.shields.io/github/license/Tekiter/word-master-react" alt="License"></a>
+# Word Master ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Tekiter/word-master-react/Deploy%20CI?label=actions&logo=github) <a href="LICENSE"><img src="https://img.shields.io/github/license/Tekiter/word-master-react" alt="License"></a>
 
 React 공부와 연습용으로 만든 간단한 단어장 웹 앱입니다.
 
@@ -8,7 +8,7 @@ React 공부와 연습용으로 만든 간단한 단어장 웹 앱입니다.
 
 - 단어장별로 단어들을 관리할 수 있습니다.
 - 단어장은 브라우저의 localStorage에 저장됩니다.
-- main 브랜치에 push하면 [Github Actions](https://github.com/Tekiter/word-master-react/actions)에 의해 즉시 빌드되어 [gh-pages](word-master-react/tree/gh-pages) 브랜치에 업로드됩니다.
+- main 브랜치에 push하면 [Github Actions](https://github.com/Tekiter/word-master-react/actions)에 의해 즉시 빌드되어 [gh-pages](https://github.com/Tekiter/word-master-react/tree/gh-pages) 브랜치에 업로드됩니다.
 
 ### Used
 
