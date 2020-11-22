@@ -16,17 +16,24 @@ React 공부와 연습용으로 만든 간단한 단어장 웹 앱입니다.
 - Mobx
 - Material-UI
 
-### Development
+## Development
 
-1. `yarn install` 명령으로 필요한 모듈 설치
-2. `yarn start` 명령으로 개발 서버 실행
+Node.js (12+), yarn 이 필요합니다.
+
+### Run dev server
+
+`yarn install` 명령으로 필요한 모듈을 설치합니다.
+
+`yarn start` 명령으로 개발 서버를 실행합니다.
 
 ### Build
 
-1. `yarn install` 명령으로 필요한 모듈 설치
-2. `yarn build` 명령 실행
-3. `/build` 경로에서 빌드된 파일 확인
+`yarn install` 명령으로 필요한 모듈을 설치합니다.
 
-### License
+`yarn build` 명령으로 빌드합니다.
+
+`/build` 경로에서 빌드된 파일을 확인합니다.
+
+## License
 
 [MIT License](LICENSE)
