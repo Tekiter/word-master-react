@@ -5,6 +5,8 @@ import WordbookContent from "./WordbookContent";
 export default observer(function AppContent() {
   const { wordbookList } = useStores();
 
+  const content = <WordbookContent />;
+
   return (
     <>
       {/* {JSON.stringify(wordbookList.selected)} */}
@@ -12,7 +14,7 @@ export default observer(function AppContent() {
       {!wordbookList.selected ? (
         <div>선택된 단어장이 없습니다...</div>
       ) : (
-        <WordbookContent />
+        content
       )}
     </>
   );
