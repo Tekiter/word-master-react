@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/word-master-react/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/word-master-react/static/js/main.55a1128b.chunk.js",
-    "main.js.map": "/word-master-react/static/js/main.55a1128b.chunk.js.map",
+    "main.js": "/word-master-react/static/js/main.0c944b44.chunk.js",
+    "main.js.map": "/word-master-react/static/js/main.0c944b44.chunk.js.map",
     "runtime-main.js": "/word-master-react/static/js/runtime-main.a734c122.js",
     "runtime-main.js.map": "/word-master-react/static/js/runtime-main.a734c122.js.map",
-    "static/js/2.2f58c7c6.chunk.js": "/word-master-react/static/js/2.2f58c7c6.chunk.js",
-    "static/js/2.2f58c7c6.chunk.js.map": "/word-master-react/static/js/2.2f58c7c6.chunk.js.map",
+    "static/js/2.ebdd4515.chunk.js": "/word-master-react/static/js/2.ebdd4515.chunk.js",
+    "static/js/2.ebdd4515.chunk.js.map": "/word-master-react/static/js/2.ebdd4515.chunk.js.map",
     "static/js/3.dbaf2f98.chunk.js": "/word-master-react/static/js/3.dbaf2f98.chunk.js",
     "static/js/3.dbaf2f98.chunk.js.map": "/word-master-react/static/js/3.dbaf2f98.chunk.js.map",
     "index.html": "/word-master-react/index.html",
     "static/css/main.6dea0f05.chunk.css.map": "/word-master-react/static/css/main.6dea0f05.chunk.css.map",
-    "static/js/2.2f58c7c6.chunk.js.LICENSE.txt": "/word-master-react/static/js/2.2f58c7c6.chunk.js.LICENSE.txt"
+    "static/js/2.ebdd4515.chunk.js.LICENSE.txt": "/word-master-react/static/js/2.ebdd4515.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.a734c122.js",
-    "static/js/2.2f58c7c6.chunk.js",
+    "static/js/2.ebdd4515.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.55a1128b.chunk.js"
+    "static/js/main.0c944b44.chunk.js"
   ]
 }
