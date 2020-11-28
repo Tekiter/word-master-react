@@ -2,7 +2,7 @@
 
 React 공부와 연습용으로 만든 간단한 단어장 웹 앱입니다.
 
-[Demo](https://tekiter.github.io/word-master-react)
+[바로가기 (Demo)](https://tekiter.github.io/word-master-react)
 
 ### Feature
 
